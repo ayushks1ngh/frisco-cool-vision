@@ -98,7 +98,7 @@ export default function HeroSection() {
         </div>
 
         {/* Stats bar */}
-        <div className="absolute bottom-12 left-0 right-0 container">
+        <div className="absolute bottom-12 left-0 right-0 container pointer-events-none">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden border border-border/60"
             style={{ background: "hsl(var(--border))" }}>
             {stats.map((stat) => (
@@ -112,7 +112,7 @@ export default function HeroSection() {
         </div>
 
         {/* 3D Animation Placeholder */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden xl:block w-[420px] h-[420px] mr-8">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden xl:block w-[420px] h-[420px] mr-8 pointer-events-none">
           <div className="w-full h-full rounded-2xl border border-border/40 flex items-center justify-center animate-float"
             style={{
               background: "hsl(var(--card) / 0.3)",

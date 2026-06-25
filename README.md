@@ -1,73 +1,93 @@
-# Welcome to your Lovable project
+# Frisco Cooling & Heating
 
-## Project info
+HVAC company website with lead capture and admin dashboard.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Tech Stack
 
-## How can I edit this code?
+- **Frontend**: React 18, Vite, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: Fastify 5, Drizzle ORM, PostgreSQL 16, Zod, JWT
+- **Deploy**: Vercel (frontend), Docker Compose (full stack)
 
-There are several ways of editing your application.
+## Local Development
 
-**Use Lovable**
+```bash
+# Start database
+docker compose up postgres -d
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+# Backend (terminal 1)
+cd backend
+cp .env.example .env
+npm install
+npm run db:migrate
+npm run db:seed
+npm run dev
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Frontend (terminal 2)
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Visit http://localhost:8080
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Environment Variables
 
-**Use GitHub Codespaces**
+### Backend (`backend/.env`)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `JWT_SECRET` | Secret for signing tokens (min 32 chars) |
+| `ADMIN_EMAIL` | Initial admin user email |
+| `ADMIN_PASSWORD` | Initial admin user password |
+| `PORT` | Server port (default: 3000) |
+| `CORS_ORIGIN` | Allowed frontend origin |
 
-## What technologies are used for this project?
+## Scripts
 
-This project is built with:
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start frontend dev server |
+| `npm run build` | Production build |
+| `npm run test` | Run tests |
+| `npm run lint` | Lint code |
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Project Structure
 
-## How can I deploy this project?
+```
+├── src/                  # Frontend source
+│   ├── components/       # Shared components
+│   │   └── ui/           # shadcn/ui primitives
+│   ├── hooks/            # Custom hooks
+│   ├── lib/              # API client, utilities
+│   ├── pages/            # Route pages
+│   │   └── admin/        # Admin dashboard
+│   └── test/             # Tests
+├── backend/              # API server
+│   ├── src/
+│   │   ├── db/           # Schema, migrations, seed
+│   │   ├── middleware/   # Auth middleware
+│   │   ├── routes/       # API routes
+│   │   └── validators/   # Zod schemas
+│   └── tests/            # API tests
+├── docker-compose.yml    # Full stack orchestration
+├── Dockerfile            # Frontend container (nginx)
+└── nginx.conf            # Reverse proxy config
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Deployment
 
-## Can I connect a custom domain to my Lovable project?
+### Vercel (Frontend Only)
 
-Yes, you can!
+The frontend deploys automatically on push. Set `VITE_API_URL` environment variable in Vercel to point to your backend.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Docker (Full Stack)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+docker compose up --build
+```
+
+Frontend on :80, Backend on :3000, Postgres on :5432 (localhost only).
+
+## License
+
+MIT
